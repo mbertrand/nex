@@ -22,7 +22,7 @@ def main():
     ndvi_tif = ndvi.ndvi_calc(masked_tif)
 
     print('Ingesting into catalog...')
-    catalog = ingest_image.ingest(ndvi_tif)
+    catalog = ingest_image.ingest(masked_tif)
 
     print('Serving tiles...')
     # Serve the tiles

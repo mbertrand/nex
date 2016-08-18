@@ -71,7 +71,7 @@ class TileServiceActor extends Actor with HttpService {
             tileOpt.map { tile =>
               // Compute the NDVI
               val ndvi =
-                tile.convert(DoubleConstantNoDataCellType).combineDouble(2, 3) { (r, ir) =>
+                tile.convert(DoubleConstantNoDataCellType).combineDouble(0, 1) { (r, ir) =>
                   if(isData(r) && isData(ir)) {
                     (ir - r) / (ir + r)
                   } else {
