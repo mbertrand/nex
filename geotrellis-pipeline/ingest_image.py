@@ -19,7 +19,7 @@ def ingest(tiff_image):
     output = os.path.join(directory, output_dir, "catalog")
 
     # Memory parameter
-    memory = "-Xms8g"
+    memory = "-Xmx4g"
 
     # Ingestor object
     ingestor = "landsat.IngestImage"

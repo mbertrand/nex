@@ -2,22 +2,29 @@ import download_image
 import hdf2tif
 import ingest_image
 import serve_tiles
-
+import maskredir
+import ndvi
 
 def main():
 
-    url = "https://www.dropbox.com/s/vfv55juwofcyho6/\
-L57.Globe.month07.2011.hh09vv04.h6v1.doy182to212.NBAR.v3.0.hdf?dl=1"
+    prefix = 'LC81070352015218LGN00'
+    url = 'http://landsat-pds.s3.amazonaws.com/L8/107/035/'
 
-    # Download the image
-    hdf_image = download_image.download(url)
+    # Download the Landsat images
+    print('Downloading Landsat images...')
+    for band in ('B4', 'B5', 'BQA'):
+        download_image.download('{}{}_{}.TIF'.format(url, prefix, band))
 
-    # Preprocess the image
-    tiff_image = hdf2tif.hdf2tif(hdf_image)
+    print('Masking red and infrared bands...')
+    masked_tif = maskredir.mask(prefix)
 
-    # Ingest the image to Geotrellis
-    catalog = ingest_image.ingest(tiff_image)
+    print('Calculating NDVI...')
+    ndvi_tif = ndvi.ndvi_calc(masked_tif)
 
+    print('Ingesting into catalog...')
+    catalog = ingest_image.ingest(ndvi_tif)
+
+    print('Serving tiles...')
     # Serve the tiles
     serve_tiles.serve(catalog)
 
