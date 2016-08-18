@@ -18,7 +18,7 @@ body, #map {
 
   new L.tileLayer("http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png").addTo(map);
 
-  new L.tileLayer("http://localhost:8080/{z}/{x}/{y}", {layers: 'default', maxNativeZoom: 13, maxZoom: 18}).addTo(map);
+  new L.tileLayer("http://localhost:8080/{z}/{x}/{y}", {layers: 'landsat', maxNativeZoom: 13, maxZoom: 18}).addTo(map);
 </script>
 </body>
 </html>
